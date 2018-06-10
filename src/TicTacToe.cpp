@@ -9,6 +9,7 @@ TicTacToe::TicTacToe(uint8_t dims, uint8_t needed):
     dim(dims),
     needed(needed),
     board(dims*dims, 0),
+    last_action(-1),
     winner(NOT_OVER_YET) {
 
     assert(dims >= needed);
@@ -19,6 +20,7 @@ TicTacToe::TicTacToe(TicTacToe* o, uint16_t action):
     needed(o->needed),
     round(o->round),
     agent(3 - o->agent),
+    last_action(o->last_action),
     board(o->board) {
 
     winner = updateWith(action);
@@ -30,6 +32,7 @@ TicTacToe::TicTacToe(TicTacToe* o):
     round(o->round),
     agent(o->agent),
     board(o->board),
+    last_action(o->last_action),
     winner(o->winner) { }
 
 std::vector<uint16_t>* TicTacToe::getAvailableActions() {
@@ -81,18 +84,37 @@ State* TicTacToe::copy() {
 };
 
 void TicTacToe::print() {
-    printf("player=%d\n", agent);
+    //printf("player=%d\n", agent);
+    std::cout << " " << " ";
+    for (int c = 0; c < dim; c++) {
+        if (c < 10)
+            std::cout << " " << c << " ";
+        else
+            std::cout << " " << c;
+    }
+    std::cout << std::endl;
     for (int r = 0; r < dim; r++) {
+        if (r < 10)
+            std::cout << " " << r;
+        else
+            std::cout << r;
+
         for (int c = 0; c < dim; c++) {
             switch (at(r, c)) {
                 case 0:
                     std::cout << " . ";
                     break;
                 case 1:
-                    std::cout << " X ";
+                    if (last_action == r * dim + c)
+                        std::cout << " * ";
+                    else
+                        std::cout << " X ";
                     break;
                 case 2:
-                    std::cout << " O ";
+                    if (last_action == r * dim + c)
+                        std::cout << " * ";
+                    else
+                        std::cout << " O ";
                     break;
             }
         }
@@ -112,6 +134,7 @@ uint16_t TicTacToe::updateWith(uint16_t action) {
     uint8_t col = action % dim;
     round++;
     board[action] = prevAgent;
+    last_action = action;
 
     uint16_t contiguous = 0;
     for (uint8_t r=0; r < dim; r++) {

@@ -24,4 +24,8 @@ public:
     virtual State* copy() = 0;
 
     virtual void print() = 0;
+
+    virtual uint8_t getDim() = 0;
+
+    virtual int16_t getLastAction() = 0;
 };

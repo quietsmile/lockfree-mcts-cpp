@@ -35,16 +35,27 @@ public:
 
     void print();
 
+    uint8_t at(uint8_t r, uint8_t c);
+
+    uint8_t getDim() {
+        return dim;
+    };
+
+    int16_t getLastAction() {
+        return last_action;
+    };
+
 private:
     TicTacToe( const TicTacToe& other ) = delete;
     TicTacToe& operator=( const TicTacToe& ) = delete; // non copyable
 
-    uint8_t at(uint8_t r, uint8_t c);
 
     uint16_t updateWith(uint16_t action);
 
     const uint8_t dim;
     const uint8_t needed;
+
+    int16_t last_action;
 
     std::vector<uint8_t> board;
     uint8_t agent{1};

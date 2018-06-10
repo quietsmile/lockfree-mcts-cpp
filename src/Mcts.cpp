@@ -95,10 +95,12 @@ void Mcts::growTree(std::mt19937& random) {
 Node* Mcts::selectOrExpand() {
     Node* node = root;
     while (!node->isTerminal()) {
+        // expand a new path
         Node* expandedNode = node->expand();
         if (expandedNode)
             return expandedNode;
 
+        // get best node
         node = node->childToExplore(); // spins until all childs are computed
     }
     return node;

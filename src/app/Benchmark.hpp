@@ -8,7 +8,8 @@ public:
     Benchmark(int dim, int needed, int times, int maxIterations2);
 
     void run();
-    void pk();
+    void ai_pk();
+    void human_pk();
 
 private:
 
@@ -24,16 +25,25 @@ private:
 };
 
 int main(int argc, char *argv[]) {
-    if (argc != 5) {
-        std::cout << "specify: dim needed times maxIterations\n";
+    if (argc != 3) {
+        std::cout << "specify: choice maxIterations\n";
         exit(1);
     }
-    int dim = std::stoi(argv[1]);
-    int needed = std::stoi(argv[2]);
-    int times = std::stoi(argv[3]);
-    int maxIterations = std::stoi(argv[4]);
-    //Benchmark(dim, needed, times, maxIterations).run();
-    Benchmark(dim, needed, times, maxIterations).pk();
+    int choice = std::stoi(argv[1]);
+    int dim = 9;
+    int needed = 5;
+    int times = 1;
+    int maxIterations = std::stoi(argv[2]);
+    Benchmark B = Benchmark(dim, needed, times, maxIterations);
+    if (choice == 0) {
+        B.human_pk();
+    } else if(choice == 1) {
+        std::cout << "ai_pk" << std::endl;
+        B.ai_pk(); 
+    } else {
+        std::cout << "not supported" << std::endl;
+    }
+    //Benchmark(dim, needed, times, maxIterations).pk();
 }
 
 

@@ -7,6 +7,7 @@
 #include <string>
 #include <memory>
 #include "../SelfPlay.hpp"
+#include "../HumanPlay.hpp"
 #include "../TicTacToe.hpp"
 #include "Benchmark.hpp"
 
@@ -70,8 +71,8 @@ void Benchmark::run() {
 
 
 
-void Benchmark::pk() {
-    uint8_t t = 40;
+void Benchmark::ai_pk() {
+    uint8_t t = 20;
     std::shared_ptr<Threads> pool1 = std::make_shared<Threads>(t);
     std::shared_ptr<Threads> pool2 = std::make_shared<Threads>(t);
     State* startState = new TicTacToe(9,5);
@@ -82,13 +83,24 @@ void Benchmark::pk() {
         t,
         timerPerActionSec,
         timerPerActionSec,
-        400000,
-        100000);
+        800,
+        800);
 
     uint8_t winner = play.play(startState);
 }
 
+void Benchmark::human_pk() {
+    uint8_t t = 20;
+    std::shared_ptr<Threads> pool = std::make_shared<Threads>(t);
+    State* startState = new TicTacToe(dim,needed);
+    HumanPlay play(
+        pool,
+        t,
+        timerPerActionSec,
+        800);
 
+    uint8_t winner = play.play(startState);
+}
 
 
 std::array<uint16_t, 3> Benchmark::testScores(uint8_t threads1, uint32_t maxIterations1) {

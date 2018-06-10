@@ -1,0 +1,7 @@
+check multi cpu is faster
+add prior_prob when expandtree
+check if virtual loss used
+[1] add mxnet for inference (may in server mode)
+add mxnet for inference in batch mode if gpu is 100% in [1]
+
+
