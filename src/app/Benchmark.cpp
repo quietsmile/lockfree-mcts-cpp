@@ -90,14 +90,14 @@ void Benchmark::ai_pk() {
 }
 
 void Benchmark::human_pk() {
-    uint8_t t = 20;
+    uint8_t t = numCpu;
     std::shared_ptr<Threads> pool = std::make_shared<Threads>(t);
     State* startState = new TicTacToe(dim,needed);
     HumanPlay play(
         pool,
         t,
         timerPerActionSec,
-        800);
+        maxIterations2);
 
     uint8_t winner = play.play(startState);
 }

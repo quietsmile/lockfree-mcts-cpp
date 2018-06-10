@@ -9,10 +9,11 @@
 #include "State.hpp"
 
         
-Node::Node(Node* parent, uint16_t action, State* state):
+Node::Node(Node* parent, State* state):
     parent(parent),
     action(action),
     state(state),
+    prior_prob(1.0),
     untakenActions(state->getAvailableActions()),
     untakenIndex(untakenActions->size() - 1) {
 
@@ -88,9 +89,29 @@ uint8_t Node::getPreviousAgent() {
     return state->getPreviousAgent();
 }
 
-void Node::updateRewards(uint8_t reward) {
-    visits++;
-    rewards += reward;
+void Node::expand(net_result) {
+    auto actions = state->getAvailableActions()
+    for (int i = 0; i < actions.size(); i++) {
+    //for (auto action: actions) {
+        auto action = actions[i];
+        prob = net_result[action];
+        State* actionState = state->takeAction(action);
+        Node* node = new Node(this, action, actionState);
+        node->setPriorProb(prob);
+        children[i] = node;
+    }
+}
+
+void Node::update(float reward) {
+    _n_visits ++;
+    _W += reward;
+    _Q = _W / _n_visits;
+}
+void Node::update_recursive(float reward) {
+   if (parent) {
+       parent->update_recursive(-reward);
+   }
+   update(reward);
 }
 
 bool Node::isVisited() {
@@ -99,7 +120,8 @@ bool Node::isVisited() {
 
 double Node::getUctValue(double c) {
     int visits1 = visits.load();
-    return (double) rewards.load() / visits1 + c * std::sqrt(std::log(parent->visits.load()) / visits1);
+    //return (double) rewards.load() / visits1 + c * std::sqrt(std::log(parent->visits.load()) / visits1);
+    return (double) rewards.load() / visits1 + c * prior_prob * std::sqrt(parent->visits.load()) / (1. + visits1);
 }
 
 Node* Node::childToExploit() {

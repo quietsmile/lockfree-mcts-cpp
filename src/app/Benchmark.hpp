@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
     int choice = std::stoi(argv[1]);
-    int dim = 9;
+    int dim = 15;
     int needed = 5;
     int times = 1;
     int maxIterations = std::stoi(argv[2]);

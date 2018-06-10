@@ -46,6 +46,10 @@ public:
 
     State* getStateCopy();
 
+    void setPriorProb(float prob) {
+        prior_prob = prob;
+    }
+
 private:
     Node( const Node& other ) = delete;
     Node& operator=( const Node& ) = delete;
@@ -61,5 +65,6 @@ private:
 
     State* const state;
     const uint16_t action;
+    float prior_prob;
 };
 
