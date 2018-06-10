@@ -85,7 +85,9 @@ void Mcts::doThink() {
 
 void Mcts::growTree(std::mt19937& random) {
     Node* child = selectOrExpand();
+    // TODO this simulate should be change to net_evaluation
     State* terminalState = simulate(child, random);
+
     backPropagate(child, terminalState);
     delete terminalState;
 }

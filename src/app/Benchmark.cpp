@@ -69,6 +69,28 @@ void Benchmark::run() {
 }
 
 
+
+void Benchmark::pk() {
+    uint8_t t = 40;
+    std::shared_ptr<Threads> pool1 = std::make_shared<Threads>(t);
+    std::shared_ptr<Threads> pool2 = std::make_shared<Threads>(t);
+    State* startState = new TicTacToe(9,5);
+    SelfPlay play(
+        pool1,
+        pool2,
+        t,
+        t,
+        timerPerActionSec,
+        timerPerActionSec,
+        400000,
+        100000);
+
+    uint8_t winner = play.play(startState);
+}
+
+
+
+
 std::array<uint16_t, 3> Benchmark::testScores(uint8_t threads1, uint32_t maxIterations1) {
     std::array<uint16_t, 3> scores { 0, 0 , 0 };
     uint8_t threads2 = 1;

@@ -86,13 +86,13 @@ void TicTacToe::print() {
         for (int c = 0; c < dim; c++) {
             switch (at(r, c)) {
                 case 0:
-                    std::cout << ".";
+                    std::cout << " . ";
                     break;
                 case 1:
-                    std::cout << "X";
+                    std::cout << " X ";
                     break;
                 case 2:
-                    std::cout << "O";
+                    std::cout << " O ";
                     break;
             }
         }
@@ -133,6 +133,41 @@ uint16_t TicTacToe::updateWith(uint16_t action) {
         }
     }
 
+    for(int8_t d = -dim+1; d < dim; d++) {
+        contiguous = 0;
+        for(int8_t x = 0; x < dim; x++) {
+            int8_t y = x + d;
+            if (y < 0 || y >= dim) {
+                contiguous = 0;
+            } else {
+                if (at(x,y) != prevAgent) {
+                    contiguous = 0;
+                } else {
+                    if (++contiguous == needed)
+                        return prevAgent;
+                }
+            }
+        }
+    }
+
+    for(int8_t s = 0; s < 2*dim-1; s++) {
+        contiguous = 0;
+        for(int8_t x = 0; x < dim; x++) {
+            int8_t y = s - x;
+            if (y < 0 || y >= dim) {
+                contiguous = 0;
+            } else {
+                if (at(x,y) != prevAgent) {
+                    contiguous = 0;
+                } else {
+                    if (++contiguous == needed)
+                        return prevAgent;
+                }
+            }
+        }
+    }
+
+    /*
     if (row == col) {
         contiguous = 0;
         for (uint8_t x = 0; x < dim; x++) {
@@ -155,7 +190,7 @@ uint16_t TicTacToe::updateWith(uint16_t action) {
                     return prevAgent;
             }
         }
-    }
+    }*/
 
     return round == dim * dim
         ? DRAW

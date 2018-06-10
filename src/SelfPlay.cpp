@@ -25,13 +25,13 @@ uint8_t SelfPlay::play(State* state) {
         Mcts* mcts = player == 1
             ? mcts1.get() 
             : mcts2.get();
-//state->print();
         mcts->setRoot(action, state);
         delete state;
         mcts->think();
 
         state = mcts->takeAction();
         action = mcts->getLastAction();
+        state->print();
     }
 //state->print();
     bool draw = state->getWinner() == 0;

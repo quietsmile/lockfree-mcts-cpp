@@ -8,6 +8,7 @@ public:
     Benchmark(int dim, int needed, int times, int maxIterations2);
 
     void run();
+    void pk();
 
 private:
 
@@ -31,7 +32,8 @@ int main(int argc, char *argv[]) {
     int needed = std::stoi(argv[2]);
     int times = std::stoi(argv[3]);
     int maxIterations = std::stoi(argv[4]);
-    Benchmark(dim, needed, times, maxIterations).run();
+    //Benchmark(dim, needed, times, maxIterations).run();
+    Benchmark(dim, needed, times, maxIterations).pk();
 }
 
 

@@ -9,7 +9,7 @@
 class TicTacToe : public State {
 public:
     static constexpr uint8_t NOT_OVER_YET = 99;
-    static constexpr uint8_t DRAW = 0;
+    static constexpr uint8_t DRAW = 1;
 
     TicTacToe(uint8_t dims, uint8_t needed);
 
